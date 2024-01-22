@@ -62,18 +62,17 @@ public class Main {
         }
 
         StringBuilder sb = new StringBuilder();
-        int tx=0, ty=0;
         for(int i=0; i<num; i++) {
             for(int j=0; j<num; j++) {
                 if(target==numArray[i][j]) {
-                    ty=i+1;
-                    tx=j+1;
+                    y=i+1;
+                    x=j+1;
                 }
                 sb.append(numArray[i][j] +" ");
             }
             sb.append("\n");
         }
-        sb.append(ty+" "+tx);
+        sb.append(y+" "+x);
         System.out.println(sb.toString());
     }
 }
