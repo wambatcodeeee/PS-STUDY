@@ -1,31 +1,26 @@
 import java.io.*;
 
 public class Main {
-    static String ios = "I";
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int repeat = Integer.parseInt(br.readLine());
         int num = Integer.parseInt(br.readLine());
-        String sentence = br.readLine();
-        int count = 0;
+        char[] sentence = br.readLine().toCharArray();
 
-        for(int i = 0;i < repeat;i++){
-            ios += "OI";
+        int result = 0;
+
+        for (int i = 0; i < sentence.length - 2; i++) {
+            if (sentence[i] == 'I' && sentence[i + 1] == 'O' && sentence[i + 2] == 'I') {
+                int count = 0;
+                while (i < sentence.length - 2 && sentence[i] == 'I' && sentence[i + 1] == 'O' && sentence[i + 2] == 'I') {
+                    count++;
+                    i += 2;
+                }
+                result += Math.max(0, count - repeat + 1);
+            }
         }
 
-        while(sentence.contains(ios)){
-            int index = sentence.indexOf(ios);
-            count++;
-            index += 1;
-            sentence = sentence.substring(index);
-        }
-
-        bw.write(String.valueOf(count));
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(result);
     }
 }
