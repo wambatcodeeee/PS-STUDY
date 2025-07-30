@@ -2,27 +2,28 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int num = Integer.parseInt(st.nextToken());
-        int num1 = Integer.parseInt(st.nextToken());
+    public static void solution(int start, int last) throws IOException {
+        int[] array = new int[start + last + 1];
 
-        boolean[] array = new boolean[num1+1];
-
-        for(int i = 2;i <= num1;i++){
-            if(array[i]) continue;
-            else if(num <= i) sb.append(i).append("\n");
-            for(int j = i + i;j <= num1;j += i){
-                array[j] = true;
+        for(int i = 2;i <= last;i++){
+            if(array[i] == 0){
+                for(int n = i;n <= last;n += i){
+                    array[n] = 1;
+                }
+                if(i >= start) bw.write(i + "\n");
             }
         }
-        
-        bw.write(String.valueOf(sb));
-        bw.flush();
+    }
+
+    public static void main(String[] args) throws IOException {
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int start = Integer.parseInt(st.nextToken());
+        int last = Integer.parseInt(st.nextToken());
+
+        solution(start, last);
         bw.close();
         br.close();
     }
