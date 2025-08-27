@@ -1,32 +1,39 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+    public static void solution(char[] chars) throws IOException {
         Stack<Character> stack = new Stack<>();
+        int result = 0;
+        char previous = '0';
 
-        String str = br.readLine();
-        int pipe = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-
-            if(c == '(')stack.push(c);
-            else{
-                stack.pop();
-                if(str.charAt(i - 1) == '(') pipe += stack.size();
-                else pipe++;
+        for(char c : chars){
+            if(c == '('){
+                stack.push(c);
+                previous = '(';
+            } else {
+                if(previous == '('){
+                    stack.pop();
+                    result += stack.size();
+                    previous = ')';
+                } else {
+                    result++;
+                    stack.pop();
+                }
             }
         }
 
-        bw.write(pipe + "\n");
-        bw.flush();
+        bw.write(String.valueOf(result));
+    }
+
+    public static void main(String[] args) throws IOException {
+        String str = br.readLine();
+        char[] chars = str.toCharArray();
+
+        solution(chars);
         bw.close();
         br.close();
     }
