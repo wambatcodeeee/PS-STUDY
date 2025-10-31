@@ -9,16 +9,16 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int N = Integer.parseInt(br.readLine());
-        int[] array = new int[N];
-        int[] dp = new int[N];
+        int[] array = new int[N + 1];
+        int[] dp = new int[N + 1];
         st = new StringTokenizer(br.readLine());
-        for(int i = N - 1;i >= 0;i--) array[i] = Integer.parseInt(st.nextToken());
-        dp[0] = 1;
+        for(int i = N;i >= 1;i--) array[i] = Integer.parseInt(st.nextToken());
+        dp[1] = 1;
         int result = 1;
 
-        for(int i = 1;i < N;i++){
+        for(int i = 2;i <= N;i++){
             int max = 0;
-            for(int j = i;j >= 0;j--) if(array[j] < array[i] && dp[j] > max) max = dp[j];
+            for(int j = i;j >= 1;j--) if(array[j] < array[i] && dp[j] > max) max = dp[j];
             dp[i] = max + 1;
             result = Math.max(result, dp[i]);
         }
