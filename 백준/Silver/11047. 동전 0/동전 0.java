@@ -1,30 +1,33 @@
+import java.util.*;
 import java.io.*;
-import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
-        int num = Integer.parseInt(st.nextToken());
-        int totalMoney = Integer.parseInt(st.nextToken());
+    public static void main(String[] args) throws IOException{
+        st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        int[] array = new int[N];
+        for(int i = 0;i < N;i++) array[i] = Integer.parseInt(br.readLine());
         int count = 0;
 
-        int[] coins = new int[num];
-
-        for(int i = 0;i < num;i++){
-            coins[i] = Integer.parseInt(br.readLine());
-        }
-
-        for(int i = num - 1;i >= 0;i--){
-            if(totalMoney / coins[i] > 0){
-                count += totalMoney / coins[i];
-                totalMoney = totalMoney % coins[i];
+        while(K > 0){
+            int recent = 0;
+            for(int i : array) {
+                if(i > K) break;
+                recent = i;
             }
+            count += K / recent;
+            K %= recent;
         }
 
-        bw.write(String.valueOf(count));
+        sb.append(count);
+        bw.write(sb.toString());
+        bw.flush();
         bw.close();
         br.close();
     }
