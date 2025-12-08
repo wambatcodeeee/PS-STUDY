@@ -1,26 +1,29 @@
+import java.util.*;
 import java.io.*;
-import java.util.PriorityQueue;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
-        int num = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws IOException{
+        int N = Integer.parseInt(br.readLine());
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
         int result = 0;
 
-        for(int i = 0; i < num; i++){
-            queue.add(Integer.parseInt(br.readLine()));
+        for(int i = 0;i < N;i++) pq.add(Integer.parseInt(br.readLine()));
+        while(pq.size() != 1){
+            int first = pq.poll();
+            int second = pq.poll();
+            pq.add(first + second);
+            result += first + second;
         }
 
-        while(queue.size() > 1){
-            int first = queue.poll();
-            int second = queue.poll();
-            int total = first + second;
-            result += total;
-            queue.add(total);
-        }
-
-        System.out.println(result);
+        sb.append(result);
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
