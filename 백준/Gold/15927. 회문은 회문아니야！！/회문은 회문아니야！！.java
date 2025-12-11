@@ -1,28 +1,35 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
+import java.io.*;
 
 public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String sentence = br.readLine();
+        String str = br.readLine();
+        boolean flag = true;
 
-        boolean flag = false;
-        int len = sentence.length();
-        for(int i = 0; i < len / 2; i++) {
-            if(sentence.charAt(i) != sentence.charAt(len-i-1)) {
-                System.out.println(sentence.length());
-                return;
-            }else if(sentence.charAt(i) != sentence.charAt(i+1)) {
-                flag = true;
+        char checkChar = str.charAt(0);
+        for(char c : str.toCharArray()){
+            if(c != checkChar){
+                flag = false;
+                break;
             }
+        }
 
+        if(flag){
+            System.out.println("-1");
+            return;
         }
-        if(flag) {
-            System.out.println(sentence.length()-1);
-        }else {
-            System.out.println(-1);
+        else{
+            if(str.contentEquals(sb.append(str).reverse())) bw.write(String.valueOf(str.length() - 1));
+            else bw.write(String.valueOf(str.length()));
         }
+
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
