@@ -10,6 +10,12 @@ public class Main {
     static long[] array;
     static long[] segmentTree;
 
+    // N * 4로 해도 무방하긴 함.. (최악의 경우가 N * 4)
+    public static int getTreeSize(){
+        int n = (int)Math.ceil(Math.log(N) / Math.log(2));
+        return (int)Math.pow(2, n + 1);
+    }
+
     // node는 트리 노드의 인덱스를 의마
     public static long init(int start, int end, int node){
         if(start == end) return segmentTree[node] = array[start];
@@ -41,7 +47,7 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
         array = new long[N];
-        segmentTree = new long[N * 4];
+        segmentTree = new long[getTreeSize()];
         for(int i = 0;i < N;i++) array[i] = Long.parseLong(br.readLine());
         init(0, N - 1, 1);
 
