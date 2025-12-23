@@ -1,53 +1,43 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    static ArrayList<Integer>[] arr;
-    static int node;
-    static int result = 0;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
+    static int[] parent;
 
-    static void bfs(int start) {
-        Queue<Integer> q = new LinkedList<>();
-        boolean[] visited = new boolean[node + 1];
-        visited[start] = true;
-        q.add(start);
-
-        while(!q.isEmpty()){
-            int now = q.poll();
-            for(int x : arr[now]){
-                if(!visited[x]){
-                    visited[x] = true;
-                    result++;
-                    q.add(x);
-                }
-            }
-        }
+    public static int find(int v){
+        if(v == parent[v]) return v;
+        return parent[v] = find(parent[v]);
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        node = Integer.parseInt(br.readLine());
-        int line = Integer.parseInt(br.readLine());
+    public static void union(int a, int b){
+        int fa = find(a);
+        int fb = find(b);
+        if(fa != fb) parent[fb] = fa;
+    }
 
-        arr = new ArrayList[node + 1];
-        for (int i = 1; i <= node; i++) {
-            arr[i] = new ArrayList<>();
+    public static void main(String[] args) throws IOException{
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        int result = 0;
+        parent = new int[N + 1];
+        for(int i = 1;i <= N;i++) parent[i] = i;
+
+        for(int i = 0;i < M;i++){
+            st = new StringTokenizer(br.readLine());
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+            union(start, end);
         }
 
-        for(int i = 1; i <= line; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            arr[a].add(b);
-            arr[b].add(a);
-        }
-
-        bfs(1);
-        System.out.println(result);
+        for(int i = 2;i <= N;i++) if(find(parent[i]) == find(parent[1])) result++;
+        sb.append(result);
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
